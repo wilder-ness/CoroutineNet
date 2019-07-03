@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
+import win.regin.coroutine.net.ViewState
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,15 +13,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         button.setOnClickListener {
-            mViewModel.getWxSubscription({
-                textView.text = "开始请求"
-            }, {
-
-            })
+            mViewModel.getWxSubscription()
         }
 
-        mViewModel.mWxSubscription.observe(this, Observer {
-            textView.text = it.data.toString()
+        mViewModel.mWxSubscription.observe(this, Observer {viewState->
+            when(viewState ){
+                is ViewState.Success->{
+                    textView.text =viewState.results?.data.toString()
+                }
+            }
+
         })
     }
 }

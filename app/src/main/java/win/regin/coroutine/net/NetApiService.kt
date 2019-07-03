@@ -14,5 +14,5 @@ import win.regin.coroutine.WeChatSubscriptionEntity
 interface NetApiService {
 
     @GET(Urls.WX_ARTICLE)
-    fun getWeChatSubscription(): Deferred<BaseEntity<List<WeChatSubscriptionEntity>>>
+   suspend fun getWeChatSubscription(): BaseEntity<List<WeChatSubscriptionEntity>>
 }

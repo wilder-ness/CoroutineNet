@@ -1,7 +1,6 @@
 package win.regin.coroutine.net
 
 import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object NetApi {
     private fun getApi(): NetApiService {
         return Retrofit.Builder().baseUrl(Urls.SERVER_URL)
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .client(getOkHttpClient(getLoggingInterceptor())).build().create(NetApiService::class.java)
     }
