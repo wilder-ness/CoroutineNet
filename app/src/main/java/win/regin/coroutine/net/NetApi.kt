@@ -26,5 +26,5 @@ object NetApi {
         return HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
     }
 
-    fun getWeChatSubscription() = getApi().getWeChatSubscription()
+    suspend fun getWeChatSubscription() = getApi().getWeChatSubscription()
 }

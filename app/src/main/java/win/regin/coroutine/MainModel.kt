@@ -15,22 +15,10 @@ import win.regin.coroutine.net.ViewState
  * 功能描述:
  */
 class MainModel : BaseViewModel() {
-    val mWxSubscription: MutableLiveData<ViewState<BaseEntity<List<WeChatSubscriptionEntity>>>> = MutableLiveData()
+    val mWxSubscription: MutableLiveData<ViewState<List<WeChatSubscriptionEntity>>> = MutableLiveData()
     fun getWxSubscription() {
         viewModelScope.launch {
-            runCatching {
-                NetApi.getWeChatSubscription()
-            }.onSuccess {
-                mWxSubscription.value  = ViewState.result(it)
-                Log.d("success", it.toString())
-            }
-            .onFailure {
-                mWxSubscription.value  = ViewState.error(it.toString())
-                //自己加判断token什么的错误--
-                Log.d("error", it.toString())
-            }
-
-
+            launchWork(NetApi.getWeChatSubscription(),mWxSubscription)
         }
     }
 
