@@ -18,7 +18,16 @@ class MainModel : BaseViewModel() {
     val mWxSubscription: MutableLiveData<ViewState<List<WeChatSubscriptionEntity>>> = MutableLiveData()
     fun getWxSubscription() {
         viewModelScope.launch {
-            launchWork(NetApi.getWeChatSubscription(),mWxSubscription)
+            //TODO 改进
+            runCatching {
+                NetApi.getWeChatSubscription()
+            }.onSuccess {
+                paresResult(mWxSubscription, it)
+                Log.d("success", it.toString())
+            }.onFailure {
+                paresException(it, mWxSubscription)
+                Log.d("error", it.toString())
+            }
         }
     }
 
