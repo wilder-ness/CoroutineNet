@@ -1,16 +1,8 @@
 package win.regin.coroutine
 
-import android.net.ParseException
 import android.util.Log
 import androidx.lifecycle.*
-import com.google.gson.JsonParseException
-import org.json.JSONException
-import retrofit2.HttpException
 import win.regin.coroutine.net.ViewState
-import java.io.InterruptedIOException
-import java.net.ConnectException
-import java.net.UnknownHostException
-
 /**
  * @author :Reginer in  2018/12/7 16:47.
  * 联系方式:QQ:282921012
@@ -18,12 +10,8 @@ import java.net.UnknownHostException
  */
 open class BaseViewModel : ViewModel() {
 
-
-    fun <T> launchWork(block: BaseEntity<T>, viewState: MutableLiveData<ViewState<T>>) {
-        //TODO 改进
-        runCatching {
-            block
-        }.onSuccess {
+    fun <T> Result<BaseEntity<T>>.launchWork(viewState: MutableLiveData<ViewState<T>>) {
+        this.onSuccess {
             paresResult(viewState, it)
             Log.d("success", it.toString())
         }.onFailure {
@@ -31,6 +19,7 @@ open class BaseViewModel : ViewModel() {
             Log.d("error", it.toString())
         }
     }
+
 
 
     /**
