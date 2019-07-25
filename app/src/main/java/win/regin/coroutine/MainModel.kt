@@ -19,6 +19,7 @@ class MainModel : BaseViewModel() {
     fun getWxSubscription() {
         viewModelScope.launch {
             runCatching {
+                mWxSubscription.value = ViewState.loading()
                 NetApi.getWeChatSubscription()
             }.launchWork(mWxSubscription)
         }
