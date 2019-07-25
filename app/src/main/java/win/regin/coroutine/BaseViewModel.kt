@@ -24,8 +24,9 @@ open class BaseViewModel : ViewModel() {
 
     /**
      * 处理返回值
+     * 自己定义各个状态 返回所需
      */
-    fun <T> paresResult(viewState: MutableLiveData<ViewState<T>>, result: BaseEntity<T>) {
+    private fun <T> paresResult(viewState: MutableLiveData<ViewState<T>>, result: BaseEntity<T>) {
         when (result.errorCode ) {
             0-> if (result.data != null) {
                 viewState.value = ViewState.result(result.data)
@@ -47,7 +48,7 @@ open class BaseViewModel : ViewModel() {
      *
      * @param e
      */
-    fun <T> paresException(e: Throwable, viewState: MutableLiveData<ViewState<T>>) {
+    private fun <T> paresException(e: Throwable, viewState: MutableLiveData<ViewState<T>>) {
         viewState.value = ViewState.error("判断异常返回异常提示")
     }
 
